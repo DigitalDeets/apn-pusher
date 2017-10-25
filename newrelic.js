@@ -11,9 +11,7 @@ exports.config = {
    * Array of application names.
    */
   app_name: ['apn-push'],
-  /**
-   * Your New Relic license key.
-   */
+
   license_key: process.env.NEW_RELIC_LICENSE_KEY,
   logging: {
     /**
