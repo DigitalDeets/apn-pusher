@@ -10,7 +10,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['deets-push'],
+  app_name: ['deet-push'],
 
   license_key: process.env.NEW_RELIC_LICENSE_KEY,
   logging: {
