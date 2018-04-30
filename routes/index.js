@@ -4,9 +4,9 @@ var cors = require('cors');
 var apn = require('apn');
 
 var apnProviderSD = new apn.Provider({
-        key: __dirname + '/key_prod.pem', // Key file path
+        key: __dirname + '/sdkey.pem', // Key file path
         passphrase: process.env.pass,
-        cert: __dirname + '/cert_prod.pem', // String or Buffer of CA data to use for the TLS connection
+        cert: __dirname + '/sdcert.pem', // String or Buffer of CA data to use for the TLS connection
         production: true,
         enhanced: true
     }
