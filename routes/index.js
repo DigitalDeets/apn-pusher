@@ -21,9 +21,9 @@ var apnProviderP = new apn.Provider({
 });
 
 var apnProviderSDDev = new apn.Provider({
-    key: __dirname + '/key.pem', // Key file path
+    key: __dirname + '/sdkey.pem', // Key file path
     passphrase: process.env.pass,
-    cert: __dirname + '/cert.pem', // String or Buffer of CA data to use for the TLS connection
+    cert: __dirname + '/sdcert.pem', // String or Buffer of CA data to use for the TLS connection
     production: false,
     enhanced: true
 });
