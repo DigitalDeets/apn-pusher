@@ -12,13 +12,6 @@ var apnProviderSD = new apn.Provider({
     }
 );
 
-var apnProviderP = new apn.Provider({
-    key: __dirname + '/parkcurity_key_dev.pem', // Key file path
-    passphrase: process.env.pass,
-    cert: __dirname + '/parkcurity_cert_dev.pem', // String or Buffer of CA data to use for the TLS connection
-    production: false,
-    enhanced: true
-});
 
 var apnProviderSDDev = new apn.Provider({
     key: __dirname + '/sdkey.pem', // Key file path
@@ -39,10 +32,7 @@ router.post('/apn', cors(), (req, res) => {
 
     }  else {
         var provider;
-        if (req.body.topic == 'com.parkcurity.app'){
-            provider = apnProviderP;
-        }
-        else if (req.body.dev) {
+        if (req.body.dev) {
             provider = apnProviderSDDev;
         } else {
             provider = apnProviderSD;
