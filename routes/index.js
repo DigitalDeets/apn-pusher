@@ -36,13 +36,13 @@ router.post('/apn', cors(), (req, res) => {
             provider = apnProviderSDDev;
         } else {
             provider = apnProviderSD;
-
         }
 
         let token = req.body.token;
         let alert = req.body.alert;
         let payload = req.body.payload;
         let topic = req.body.topic;
+        let badge = req.body.badge;
         let deviceToken = token;
         
         console.log('sending push to token: ' + deviceToken);
@@ -50,7 +50,7 @@ router.post('/apn', cors(), (req, res) => {
         var note = new apn.Notification();
 
         //note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-        note.badge = 1;
+        note.badge = badge;
         note.sound = "ping.aiff";
         note.alert = alert;
         note.payload = payload;
