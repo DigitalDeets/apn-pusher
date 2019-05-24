@@ -3,23 +3,21 @@ var router = express.Router();
 var cors = require('cors');
 var apn = require('apn');
 
-var apnProviderSD = new apn.Provider({
-        key: __dirname + '/sdkey.pem', // Key file path
-        passphrase: process.env.pass,
-        cert: __dirname + '/sdcert.pem', // String or Buffer of CA data to use for the TLS connection
-        production: true,
-        enhanced: true
-    }
-);
-
-
-var apnProviderSDDev = new apn.Provider({
+var apnProviderSDconfig = {
+    key: __dirname + '/sdkey.pem', // Key file path
+    passphrase: process.env.pass,
+    cert: __dirname + '/sdcert.pem', // String or Buffer of CA data to use for the TLS connection
+    production: true,
+    enhanced: true
+};
+    
+var apnProviderSDDevconfig = {
     key: __dirname + '/sdkey.pem', // Key file path
     passphrase: process.env.pass,
     cert: __dirname + '/sdcert.pem', // String or Buffer of CA data to use for the TLS connection
     production: false,
     enhanced: true
-});
+};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -32,10 +30,11 @@ router.post('/apn', cors(), (req, res) => {
 
     }  else {
         var provider;
+        
         if (req.body.dev) {
-            provider = apnProviderSDDev;
+            provider = new apn.Provider(apnProviderSDDevconfig);
         } else {
-            provider = apnProviderSD;
+            provider = new apn.Provider(apnProviderSDconfig);
         }
 
         let token = req.body.token;
@@ -45,7 +44,7 @@ router.post('/apn', cors(), (req, res) => {
         let badge = req.body.badge;
         let deviceToken = token;
         
-        console.log('sending push to token: ' + deviceToken);
+        //console.log('sending push to token: ' + deviceToken);
 
         var note = new apn.Notification();
 
