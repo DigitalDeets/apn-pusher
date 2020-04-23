@@ -58,6 +58,8 @@ router.post('/apn', cors(), (req, res) => {
         provider.send(note, deviceToken).then((result) => {
             res.json({success: true, result: result});
         });
+        
+        provider.shutdown();
     }
 
 });
