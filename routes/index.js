@@ -4,17 +4,17 @@ var cors = require('cors');
 var apn = require('apn');
 
 var apnProviderSDconfig = {
-    key: __dirname + '/sdkey_20200620.pem', // Key file path
+    key: __dirname + '/sdkey_20210720.pem', // Key file path
     passphrase: process.env.pass,
-    cert: __dirname + '/sdcert_20200620.pem', // String or Buffer of CA data to use for the TLS connection
+    cert: __dirname + '/sdcert_20210720.pem', // String or Buffer of CA data to use for the TLS connection
     production: true,
     enhanced: true
 };
     
 var apnProviderSDDevconfig = {
-    key: __dirname + '/sdkey_20200620.pem', // Key file path
+    key: __dirname + '/sdkey_20210720.pem', // Key file path
     passphrase: process.env.pass,
-    cert: __dirname + '/sdcert_20200620.pem', // String or Buffer of CA data to use for the TLS connection
+    cert: __dirname + '/sdcert_20210720.pem', // String or Buffer of CA data to use for the TLS connection
     production: false,
     enhanced: true
 };
