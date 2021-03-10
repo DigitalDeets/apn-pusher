@@ -61,7 +61,6 @@ router.post('/apn', cors(), (req, res) => {
         
         provider.shutdown();
     }
-
 });
 
 router.get('/androidlink', cors(), (req, res) => {
