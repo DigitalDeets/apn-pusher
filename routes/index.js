@@ -7,16 +7,7 @@ var apnProviderSDconfig = {
     key: __dirname + '/sdkey_20210720.pem', // Key file path
     passphrase: process.env.pass,
     cert: __dirname + '/sdcert_20210720.pem', // String or Buffer of CA data to use for the TLS connection
-    production: true,
-    enhanced: true
-};
-    
-var apnProviderSDDevconfig = {
-    key: __dirname + '/sdkey_20210720.pem', // Key file path
-    passphrase: process.env.pass,
-    cert: __dirname + '/sdcert_20210720.pem', // String or Buffer of CA data to use for the TLS connection
-    production: false,
-    enhanced: true
+    production: true
 };
 
 /* GET home page. */
@@ -26,27 +17,18 @@ router.get('/', function(req, res, next) {
 
 router.post('/apn', cors(), (req, res) => {
     if (!req.body.secret_sauce) {
-        res.json({error: true, message: 'api key not provided'});
+        res.json({success: false, error: true, message: 'api key not provided'});
 
     }  else {
-        var provider;
-        
-        if (req.body.dev) {
-            provider = new apn.Provider(apnProviderSDDevconfig);
-        } else {
-            provider = new apn.Provider(apnProviderSDconfig);
-        }
+        let provider = new apn.Provider(apnProviderSDconfig);
 
-        let token = req.body.token;
         let alert = req.body.alert;
         let payload = req.body.payload;
         let topic = req.body.topic;
         let badge = req.body.badge;
-        let deviceToken = token;
+        let deviceToken = req.body.token;
         
-        //console.log('sending push to token: ' + deviceToken);
-
-        var note = new apn.Notification();
+        let note = new apn.Notification();
 
         //note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
         note.badge = badge;
@@ -56,16 +38,42 @@ router.post('/apn', cors(), (req, res) => {
         note.topic = topic;
 
         provider.send(note, deviceToken).then((result) => {
-            res.json({success: true, result: result});
+            res.json({success: true, result: result});    
+            provider.shutdown();
         });
-        
-        provider.shutdown();
     }
 });
 
-router.get('/androidlink', cors(), (req, res) => {
-    var androidLinks = ['asbury.dpsk12.org'];
-    res.json({result: androidLinks});
-})
+router.post('/apn-test', cors(), (req, res) => {
+    if (!req.body.secret_sauce) {
+        res.json({success: false, error: true, message: 'api key not provided'});
+
+    }  else {
+        let provider = new apn.Provider(apnProviderSDconfig);
+
+        let alert = req.body.alert;
+        let payload = req.body.payload;
+        let topic = req.body.topic;
+        let badge = req.body.badge;
+        let deviceToken = req.body.token;
+        
+        console.log('deviceToken ' + deviceToken);
+
+        let note = new apn.Notification();
+
+        //note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+        note.badge = badge;
+        note.sound = "ping.aiff";
+        note.alert = alert;
+        note.payload = payload;
+        note.topic = topic;
+
+        provider.send(note, deviceToken).then((result) => {
+            console.log(result);
+            res.json({success: true, result: result});
+            provider.shutdown();
+        }); 
+    }
+});
 
 module.exports = router;
