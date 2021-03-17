@@ -38,8 +38,8 @@ router.post('/apn', cors(), (req, res) => {
         note.topic = topic;
 
         provider.send(note, deviceToken).then((result) => {
-            res.json({success: true, result: result});    
             provider.shutdown();
+            res.status(200).json({success: true, result: result});
         });
     }
 });
@@ -56,8 +56,6 @@ router.post('/apn-test', cors(), (req, res) => {
         let topic = req.body.topic;
         let badge = req.body.badge;
         let deviceToken = req.body.token;
-        
-        console.log('deviceToken ' + deviceToken);
 
         let note = new apn.Notification();
 
@@ -69,9 +67,9 @@ router.post('/apn-test', cors(), (req, res) => {
         note.topic = topic;
 
         provider.send(note, deviceToken).then((result) => {
-            console.log(result);
-            res.json({success: true, result: result});
             provider.shutdown();
+            console.log(result);
+            res.status(200).json({success: true, result: result});
         }); 
     }
 });
