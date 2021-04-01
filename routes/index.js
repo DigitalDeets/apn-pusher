@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var cors = require('cors');
-var apn = require('apn');
+var apn = require('@parse/node-apn');
 
 var apnProviderSDconfig = {
     key: __dirname + '/sdkey_20210720.pem', // Key file path
@@ -12,7 +12,8 @@ var apnProviderSDconfig = {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', {title: 'Express'});
+	res.render('index', {title: 'School Deets'});
+    res.end();
 });
 
 router.post('/apn', cors(), (req, res) => {
