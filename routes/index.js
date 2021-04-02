@@ -45,7 +45,7 @@ router.post('/apn', cors(), (req, res) => {
     }
 });
 
-router.post('/apn-test', cors(), (req, res) => {
+router.post('/apn_test', cors(), (req, res) => {
     if (!req.body.secret_sauce) {
         res.json({success: false, error: true, message: 'api key not provided'});
 
@@ -67,6 +67,7 @@ router.post('/apn-test', cors(), (req, res) => {
         note.payload = payload;
         note.topic = topic;
 
+        console.log(deviceToken);
         provider.send(note, deviceToken).then((result) => {
             provider.shutdown();
             console.log(result);
